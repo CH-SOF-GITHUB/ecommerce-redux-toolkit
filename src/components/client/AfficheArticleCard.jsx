@@ -6,10 +6,12 @@ import { Navigate, useNavigate } from 'react-router-dom'
 const AfficheArticleCard = () => {
   const dispatch = useDispatch()
   let navigate = useNavigate()
-  //
+  
+  // useSelector hook  in favor of using dispatch
   const { articles, isLoading, error } = useSelector(
     state => state.storearticles
   )
+  
   //
   const handleAddToCart = (cart) => {
     dispatch(addToCart(cart))

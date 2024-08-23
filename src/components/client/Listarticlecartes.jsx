@@ -8,7 +8,7 @@ import Pagination from '../admin/articles/Pagination'
 
 
 const Listarticlecartes = () => {
-     /* `const dispatch = useDispatch()` is a React Redux hook that returns a reference to the `dispatch`
+  /* `const dispatch = useDispatch()` is a React Redux hook that returns a reference to the `dispatch`
   function provided by the Redux store. This `dispatch` function is used to dispatch actions to the
   Redux store, which in turn triggers state changes in the application. In this context, `dispatch`
   is being used to trigger the `getArticles` action from the `articleSlice` feature to fetch

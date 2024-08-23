@@ -6,7 +6,8 @@ import Menu from "./components/admin/Menu";
 import './App.css'
 import Listarticlecartes from "./components/client/Listarticlecartes";
 import Cart from "./components/client/panier/Cart";
-
+import Register from "./components/admin/Register";
+import Login from "./components/admin/Login";
 
 function App() {
  
@@ -20,6 +21,8 @@ function App() {
 <Route path="/scategories"  element={<Listscategories/>}/>
 <Route path="/" element={<Listarticlecartes/>}/>
 <Route path="/cart" element={<Cart />} />
+<Route path="/register" element={<Register />} />
+<Route path="/login" element={<Login  />}  />
 </Routes>
 </Router>
     </>
