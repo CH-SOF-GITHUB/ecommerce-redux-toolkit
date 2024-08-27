@@ -13,8 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { login } from '../../features/authSlice';
+import { Alert } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -34,27 +35,35 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function Login() {
+  //
+  const {status, isError, isLoggedIn } = useSelector((state) => state.auth)
     // hooks
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     // state login 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
+    const [error, setError] = useState("")
+    //
   const handleSubmit = (event) => {
     event.preventDefault();
     if(password == null || email == null) {
-        alert("check your credentials !");
+      setError("Email and Password are required");
     }else {
-        const userData = {
+    const userData = {
             email: email,
             password: password
-        }
-
-        dispatch(login(userData));
     }
-    navigate("/articles");
-  };
+    //
+    dispatch(login(userData));
+  }
+};
+
+// condition if login navigate vers Menu
+if(isLoggedIn){
+  navigate('/menu');
+}
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -126,6 +135,7 @@ export default function Login() {
             </Grid>
           </Box>
         </Box>
+        {error && <Alert severity="error">{error}</Alert>}
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

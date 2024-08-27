@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-
+//
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
+//
 import { signin, signup } from '../services/Authservice'
 
 export const register = createAsyncThunk(
@@ -22,12 +26,18 @@ export const login = createAsyncThunk(
         const {rejectWithValue} = thunkAPI;
         try {
             const res = await signin(user);
+            localStorage.setItem('user', res.data.user);
             return res.data;
         } catch (error) {
-            return rejectWithValue(error.message)
+            // Extract the message from the error response
+            return rejectWithValue(res.data.message);
         }
     }
 )
+
+export const logout = createAsyncThunk("auth/logout", () => {
+    localStorage.removeItem('token');
+});
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -76,15 +86,29 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.status = null;
         state.user = action.payload.user;
+        console.log(action.payload);
         state.isLoggedIn = true;
-        localStorage.setItem("token", action.payload.token);
+        MySwal.fire({
+            icon: 'success',
+            title: 'Connection est réussi'
+        })
+        localStorage.setItem('token', action.payload.token);
       }).addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.status = action.payload;
+        state.status = null;
+        state.errorMessage = action.payload;
+        console.log(state.errorMessage);
         state.user = null;
         state.isLoggedIn = false;
-      })
+        MySwal.fire({
+            icon: 'error',
+            title: 'Erreur de connexion'
+        })
+      }).addCase(logout.fulfilled, (state, action) => {
+        state.isLoggedIn = false;
+        state.user = null;
+      });
   }
 })
 

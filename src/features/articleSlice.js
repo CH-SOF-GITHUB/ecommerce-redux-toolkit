@@ -94,6 +94,5 @@ export const articleSlice = createSlice({
   }
 })
 
-
-export default articleSlice.reducer
-export const { setPage, setLimit, setSearchTerm } = articleSlice.actions
+export default articleSlice.reducer;
+export const { setPage, setLimit, setSearchTerm } = articleSlice.actions;

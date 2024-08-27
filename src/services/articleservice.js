@@ -17,8 +17,5 @@ export const editarticle = article => {
   return axios.put(ARTICLE_API + '/' + article._id, article)
 }
 export const fetcharticlesPagination = async (page, limit, serachtext) => {
-  return await axios.get(
-    ARTICLE_API +
-      `/art/pagination?filtre=${serachtext}&page=${page}&pageSize=${limit}`
-  )
+  return await axios.get(ARTICLE_API +`/art/pagination?filtre=${serachtext}&page=${page}&pageSize=${limit}`)
 }
